@@ -10,16 +10,14 @@ llm = ChatOllama(model='gemma3:4b')
 
 # initialize state
 class ChatState(TypedDict):
-    message: Annotated[list[BaseMessage], add_messages]
+    messages: Annotated[list[BaseMessage], add_messages]
 
 # build node
 def chatbot_node(state: ChatState):
-    prompt = (f"You are a all rounder chatbot\n"
-              f"Help user with this: \n"
-              f"{state['message']}")
-    response = llm.invoke(prompt).content
+    messages = state["messages"]
+    response = llm.invoke(messages)
 
-    return {"message": [response]}
+    return {"messages": [response]}
 
 
 # initialize the graph
