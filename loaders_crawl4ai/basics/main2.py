@@ -10,6 +10,14 @@ config = CrawlerRunConfig(
     )
 )
 
+# Adding Basic Options
+run_config = CrawlerRunConfig(
+    word_count_threshold=10,        # Minimum words per content block
+    exclude_external_links=True,    # Remove external links
+    remove_overlay_elements=True,   # Remove popups/modals
+    process_iframes=True           # Process iframe content
+)
+
 
 async def main():
     browser_config = BrowserConfig()
@@ -17,20 +25,32 @@ async def main():
     async with AsyncWebCrawler(config=browser_config) as crawler:
         result = await crawler.arun(
             url="https://github.com/Snapchat/Valdi/blob/main/README.md",
-            config=config
+            config=run_config
         )
         print(result.html)
-        print(type(result.html))
-        return result.html
+        # print(type(result.html))
+        # return result.html # Raw HTML
+        # return result.cleaned_html # Cleaned HTML
+        # return result.markdown.raw_markdown # Raw markdown from cleaned html
+        # return result.markdown.fit_markdown # Most relevant content in markdown
+
+        # Check success status
+        print(result.success)      # True if crawl succeeded
+        print(result.status_code)  # HTTP status code (e.g., 200, 404)
+        
+        # Access extracted media and links
+        # print(result.media) # Dictionary of found media (images, videos  , audio)
+        # print(result.links) # Dictionary of internal and external links
 
 
 if __name__ == "__main__":
 
-    # asyncio.run(main())
     content = asyncio.run(main())
-    file_path = "normal_html.html"
+    file_path = "loaders_crawl4ai\\basics\\results\\fit_markdown.md"
 
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write(content)
-
-    print(f"HTML content saved to {file_path}")
+        if content is str:
+            f.write(content)
+            print(f"HTML content saved to {file_path}")
+        else:
+            pass
