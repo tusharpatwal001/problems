@@ -27,7 +27,7 @@ async def main():
             url="https://github.com/Snapchat/Valdi/blob/main/README.md",
             config=run_config
         )
-        print(result.html)
+        # print(result.html)
         # print(type(result.html))
         # return result.html # Raw HTML
         # return result.cleaned_html # Cleaned HTML
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     file_path = "loaders_crawl4ai\\basics\\results\\fit_markdown.md"
 
     with open(file_path, "w", encoding="utf-8") as f:
-        if content is str:
+        if type(content) is str:
             f.write(content)
             print(f"HTML content saved to {file_path}")
         else:
