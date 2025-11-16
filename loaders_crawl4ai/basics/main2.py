@@ -35,7 +35,7 @@ async def main():
         # return result.markdown.fit_markdown # Most relevant content in markdown
 
         # Check success status
-        print(result.success)      # True if crawl succeeded
+        print(result.html)      # True if crawl succeeded
         print(result.status_code)  # HTTP status code (e.g., 200, 404)
         
         # Access extracted media and links
