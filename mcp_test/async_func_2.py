@@ -8,6 +8,8 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_core.tools import tool
 import asyncio
 import os
+import sys
+from pathlib import Path
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
 load_dotenv()
@@ -16,12 +18,13 @@ llm = ChatGoogleGenerativeAI(
     model=os.getenv("GEMINI_MAX_15"), google_api_key=os.getenv("GEMINI_API_KEY")
 )
 
+script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "math.py"))
 client = MultiServerMCPClient(
     {
         "arith": {
             "transport": "stdio",
-            "command": "python3",
-            "args": ["/c/Users/web.dev-13/Desktop/Main/ResearchTool/mcp__/math.py"],
+            "command": sys.executable,
+            "args": [script_path],
         }
     }
 )
