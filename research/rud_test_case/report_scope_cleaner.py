@@ -1,4 +1,4 @@
-with open("jsons/report_scope.json", encoding='utf-8')as f:
+with open(r"research\rud_test_case\jsons\report_scope.json", encoding='utf-8')as f:
     import json
     data = json.load(f)
 
@@ -20,5 +20,5 @@ for item in [{i: data[i]} for i in all_keys]:
                 value[v] = new_value
         cleaned_dict[key] = value
 
-with open("jsons/cleaned_report_scope.json", "w", encoding='utf-8') as f:
+with open(r"research\rud_test_case\jsons\cleaned_report_scope.json", "w", encoding='utf-8') as f:
     json.dump(cleaned_dict, f, ensure_ascii=False)
